@@ -1,0 +1,194 @@
+{
+  "managed_project_ids": [
+    "legacy-project",
+    "stale-project"
+  ],
+  "projects": [
+    {
+      "project_id": "teaching-default-budget",
+      "name": "Teaching Default Budget Project",
+      "folder_path": ["deakin.edu.au", "SEBE", "SIT", "Units"],
+      "use_case": "TEACHING_AND_LEARNING",
+      "principal_mode": "ONE_TO_MANY",
+      "principals": ["lecturer@example.edu", "tutor@example.edu"],
+      "budget_monthly_aud": 0.0,
+      "budget_spent_aud": 10.0,
+      "active": true,
+      "planned_products": ["COLAB_ENTERPRISE"]
+    },
+    {
+      "project_id": "phd-budget-exhausted",
+      "name": "Budget Exhausted PhD Project",
+      "folder_path": ["deakin.edu.au", "SEBE", "Eng", "PHD Research"],
+      "use_case": "PHD_RESEARCH",
+      "principal_mode": "ONE_TO_ONE",
+      "principals": ["student.b@deakin.edu.au"],
+      "budget_monthly_aud": 150.0,
+      "budget_spent_aud": 150.0,
+      "active": true,
+      "planned_products": ["COLAB_ENTERPRISE"]
+    },
+    {
+      "project_id": "region-project",
+      "name": "Disallowed Region Project",
+      "folder_path": ["deakin.edu.au", "Research"],
+      "use_case": "GENERAL_RESEARCH",
+      "principal_mode": "ONE_TO_ONE",
+      "principals": ["researcher@example.edu"],
+      "budget_monthly_aud": 400.0,
+      "budget_spent_aud": 30.0,
+      "active": true,
+      "planned_products": ["COLAB_ENTERPRISE"]
+    },
+    {
+      "project_id": "expired-approval-project",
+      "name": "Expired Approval Project",
+      "folder_path": ["deakin.edu.au", "Research"],
+      "use_case": "PHD_RESEARCH",
+      "principal_mode": "ONE_TO_ONE",
+      "principals": ["student.c@deakin.edu.au"],
+      "budget_monthly_aud": 150.0,
+      "budget_spent_aud": 5.0,
+      "active": true,
+      "planned_products": ["COLAB_ENTERPRISE"]
+    },
+    {
+      "project_id": "cpu-project",
+      "name": "High Cost CPU Project",
+      "folder_path": ["deakin.edu.au", "Digital Services"],
+      "use_case": "PHD_RESEARCH",
+      "principal_mode": "ONE_TO_ONE",
+      "principals": ["owner@example.edu"],
+      "budget_monthly_aud": 150.0,
+      "budget_spent_aud": 0.0,
+      "active": true,
+      "planned_products": ["COLAB_ENTERPRISE"]
+    }
+  ],
+  "approvals": [
+    {
+      "approval_id": "apr-expired-a100",
+      "project_id": "expired-approval-project",
+      "valid_from": "2025-01-01T00:00:00Z",
+      "valid_to": "2025-01-31T23:59:00Z",
+      "approved_products": ["COLAB_ENTERPRISE"],
+      "approved_machine_prefixes": ["a2"],
+      "approved_accelerators": ["A100"],
+      "approved_max_hourly_burn_aud": 15.0,
+      "requested_by": "student.c@deakin.edu.au",
+      "approved_by": "platform@example.edu",
+      "active": true
+    }
+  ],
+  "provisioning_requests": [
+    {
+      "request_id": "req-unknown",
+      "project_id": "unknown-project",
+      "product": "COLAB_ENTERPRISE",
+      "machine_type": "n2-standard-4",
+      "region": "australia-southeast1",
+      "requested_at": "2026-02-22T10:00:00Z",
+      "requested_by": "ghost@example.edu",
+      "estimated_hourly_burn_aud": 1.0
+    },
+    {
+      "request_id": "req-bad-region",
+      "project_id": "region-project",
+      "product": "COLAB_ENTERPRISE",
+      "machine_type": "n2-standard-4",
+      "region": "europe-west1",
+      "requested_at": "2026-02-22T10:05:00Z",
+      "requested_by": "researcher@example.edu",
+      "estimated_hourly_burn_aud": 1.0
+    },
+    {
+      "request_id": "req-expired-a100",
+      "project_id": "expired-approval-project",
+      "product": "COLAB_ENTERPRISE",
+      "machine_type": "a2-highgpu-1g",
+      "region": "australia-southeast1",
+      "requested_at": "2026-02-22T10:10:00Z",
+      "requested_by": "student.c@deakin.edu.au",
+      "estimated_hourly_burn_aud": 12.0,
+      "accelerator_type": "A100"
+    },
+    {
+      "request_id": "req-high-cost-cpu",
+      "project_id": "cpu-project",
+      "product": "COLAB_ENTERPRISE",
+      "machine_type": "n2-highmem-128",
+      "region": "australia-southeast1",
+      "requested_at": "2026-02-22T10:15:00Z",
+      "requested_by": "owner@example.edu",
+      "estimated_hourly_burn_aud": 40.0
+    }
+  ],
+  "runtime_snapshots": [
+    {
+      "resource_id": "runtime-unknown",
+      "project_id": "unknown-project",
+      "product": "COLAB_ENTERPRISE",
+      "machine_type": "n2-standard-4",
+      "region": "australia-southeast1",
+      "status": "RUNNING",
+      "connected": true,
+      "observed_at": "2026-02-22T18:00:00Z",
+      "started_at": "2026-02-22T17:00:00Z",
+      "last_activity_at": "2026-02-22T17:30:00Z",
+      "hourly_burn_rate_aud": 1.0
+    },
+    {
+      "resource_id": "runtime-bad-region",
+      "project_id": "region-project",
+      "product": "COLAB_ENTERPRISE",
+      "machine_type": "n2-standard-4",
+      "region": "europe-west1",
+      "status": "RUNNING",
+      "connected": true,
+      "observed_at": "2026-02-22T18:00:00Z",
+      "started_at": "2026-02-22T17:00:00Z",
+      "last_activity_at": "2026-02-22T17:57:00Z",
+      "hourly_burn_rate_aud": 1.0
+    },
+    {
+      "resource_id": "runtime-budget-exhausted",
+      "project_id": "phd-budget-exhausted",
+      "product": "COLAB_ENTERPRISE",
+      "machine_type": "n2-standard-4",
+      "region": "australia-southeast1",
+      "status": "RUNNING",
+      "connected": true,
+      "observed_at": "2026-02-22T18:00:00Z",
+      "started_at": "2026-02-22T17:00:00Z",
+      "last_activity_at": "2026-02-22T17:58:00Z",
+      "hourly_burn_rate_aud": 2.0
+    },
+    {
+      "resource_id": "runtime-missing-activity",
+      "project_id": "teaching-default-budget",
+      "product": "COLAB_ENTERPRISE",
+      "machine_type": "n2-standard-4",
+      "region": "australia-southeast1",
+      "status": "RUNNING",
+      "connected": true,
+      "observed_at": "2026-02-22T18:00:00Z",
+      "started_at": "2026-02-22T16:00:00Z",
+      "last_activity_at": null,
+      "hourly_burn_rate_aud": 1.0
+    },
+    {
+      "resource_id": "runtime-expired-a100",
+      "project_id": "expired-approval-project",
+      "product": "COLAB_ENTERPRISE",
+      "machine_type": "a2-highgpu-1g",
+      "region": "australia-southeast1",
+      "accelerator_type": "A100",
+      "status": "RUNNING",
+      "connected": true,
+      "observed_at": "2026-02-22T18:00:00Z",
+      "started_at": "2026-02-22T17:00:00Z",
+      "last_activity_at": "2026-02-22T17:50:00Z",
+      "hourly_burn_rate_aud": 12.0
+    }
+  ]
+}

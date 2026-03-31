@@ -1,0 +1,54 @@
+{
+  "YOUR_PHD_PROJECT_ID": {
+    "use_case": "PHD_RESEARCH",
+    "principal_mode": "ONE_TO_ONE",
+    "principals": ["student@deakin.edu.au"],
+    "budget_monthly_aud": 150.0,
+    "budget_spent_aud": 0.0,
+    "active": true,
+    "planned_products": ["COLAB_ENTERPRISE"],
+    "labels": {
+      "environment": "research",
+      "source": "gcp-live-discovery"
+    }
+  },
+  "YOUR_TEACHING_PROJECT_ID": {
+    "use_case": "TEACHING_AND_LEARNING",
+    "principal_mode": "ONE_TO_MANY",
+    "principals": ["lecturer@deakin.edu.au", "tutor@deakin.edu.au"],
+    "budget_monthly_aud": 500.0,
+    "budget_spent_aud": 120.0,
+    "active": true,
+    "planned_products": ["COLAB_ENTERPRISE"],
+    "labels": {
+      "environment": "teaching",
+      "source": "gcp-live-discovery"
+    }
+  },
+  "YOUR_RESEARCH_PROJECT_ID": {
+    "use_case": "GENERAL_RESEARCH",
+    "principal_mode": "ONE_TO_MANY",
+    "principals": ["pi@deakin.edu.au", "researcher1@deakin.edu.au", "researcher2@deakin.edu.au"],
+    "budget_monthly_aud": 1000.0,
+    "budget_spent_aud": 300.0,
+    "active": true,
+    "planned_products": ["COLAB_ENTERPRISE"],
+    "labels": {
+      "environment": "research",
+      "source": "gcp-live-discovery"
+    }
+  },
+  "YOUR_PROFESSIONAL_STAFF_PROJECT_ID": {
+    "use_case": "PROFESSIONAL_STAFF",
+    "principal_mode": "ONE_TO_ONE",
+    "principals": ["staff.member@deakin.edu.au"],
+    "budget_monthly_aud": 300.0,
+    "budget_spent_aud": 40.0,
+    "active": true,
+    "planned_products": ["COLAB_ENTERPRISE"],
+    "labels": {
+      "environment": "operations",
+      "source": "gcp-live-discovery"
+    }
+  }
+}

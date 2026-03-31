@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+env/
+.env
+.gcloud-clean/
+data/project_profiles.json
+application_default_credentials.json
+*.pem
+*.log

@@ -1,0 +1,100 @@
+{
+  "managed_project_ids": [
+    "legacy-project"
+  ],
+  "projects": [
+    {
+      "project_id": "phd-student-a",
+      "name": "Student A Colab Project",
+      "folder_path": ["deakin.edu.au", "SEBE", "Eng", "PHD Research"],
+      "use_case": "PHD_RESEARCH",
+      "principal_mode": "ONE_TO_ONE",
+      "principals": ["student.a@deakin.edu.au"],
+      "budget_monthly_aud": 150.0,
+      "budget_spent_aud": 18.0,
+      "active": true,
+      "planned_products": ["COLAB_ENTERPRISE"]
+    },
+    {
+      "project_id": "teaching-unit-01",
+      "name": "Teaching Demo Project",
+      "folder_path": ["deakin.edu.au", "SEBE", "Teaching and Learning"],
+      "use_case": "TEACHING_AND_LEARNING",
+      "principal_mode": "ONE_TO_MANY",
+      "principals": ["lecturer@example.edu", "tutor@example.edu"],
+      "budget_monthly_aud": 0.0,
+      "budget_spent_aud": 20.0,
+      "active": true,
+      "planned_products": ["COLAB_ENTERPRISE"]
+    }
+  ],
+  "approvals": [
+    {
+      "approval_id": "apr-teaching-a100",
+      "project_id": "teaching-unit-01",
+      "valid_from": "2026-02-01T00:00:00Z",
+      "valid_to": "2026-03-31T23:59:00Z",
+      "approved_products": ["COLAB_ENTERPRISE"],
+      "approved_machine_prefixes": ["a2"],
+      "approved_accelerators": ["A100"],
+      "approved_max_hourly_burn_aud": 15.0,
+      "requested_by": "lecturer@example.edu",
+      "approved_by": "platform@example.edu",
+      "active": true
+    }
+  ],
+  "provisioning_requests": [
+    {
+      "request_id": "req-student-a",
+      "project_id": "phd-student-a",
+      "product": "COLAB_ENTERPRISE",
+      "machine_type": "a2-highgpu-1g",
+      "region": "australia-southeast1",
+      "requested_at": "2026-02-22T09:00:00Z",
+      "requested_by": "student.a@deakin.edu.au",
+      "estimated_hourly_burn_aud": 12.0,
+      "accelerator_type": "A100"
+    },
+    {
+      "request_id": "req-teaching-a100",
+      "project_id": "teaching-unit-01",
+      "product": "COLAB_ENTERPRISE",
+      "machine_type": "a2-highgpu-1g",
+      "region": "australia-southeast1",
+      "requested_at": "2026-02-22T09:05:00Z",
+      "requested_by": "lecturer@example.edu",
+      "estimated_hourly_burn_aud": 12.0,
+      "accelerator_type": "A100"
+    }
+  ],
+  "runtime_snapshots": [
+    {
+      "resource_id": "runtime-001",
+      "project_id": "phd-student-a",
+      "product": "COLAB_ENTERPRISE",
+      "machine_type": "a2-highgpu-1g",
+      "region": "australia-southeast1",
+      "accelerator_type": "A100",
+      "status": "RUNNING",
+      "connected": true,
+      "observed_at": "2026-02-22T18:00:00Z",
+      "started_at": "2026-02-22T09:00:00Z",
+      "last_activity_at": "2026-02-22T09:00:00Z",
+      "hourly_burn_rate_aud": 12.0
+    },
+    {
+      "resource_id": "runtime-002",
+      "project_id": "teaching-unit-01",
+      "product": "COLAB_ENTERPRISE",
+      "machine_type": "a2-highgpu-1g",
+      "region": "australia-southeast1",
+      "accelerator_type": "A100",
+      "status": "RUNNING",
+      "connected": true,
+      "observed_at": "2026-02-22T18:00:00Z",
+      "started_at": "2026-02-22T17:30:00Z",
+      "last_activity_at": "2026-02-22T17:57:00Z",
+      "hourly_burn_rate_aud": 12.0
+    }
+  ]
+}

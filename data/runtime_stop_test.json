@@ -1,0 +1,20 @@
+{
+  "type": "scheduled_sweep",
+  "source": "manual-runtime-stop-test",
+  "runtime_snapshots": [
+    {
+      "resource_id": "projects/YOUR_PROJECT_ID/locations/YOUR_REGION/notebookRuntimes/test-runtime-001",
+      "project_id": "YOUR_PROJECT_ID",
+      "product": "COLAB_ENTERPRISE",
+      "machine_type": "a2-highgpu-1g",
+      "region": "YOUR_REGION",
+      "accelerator_type": "A100",
+      "status": "RUNNING",
+      "connected": true,
+      "observed_at": "2026-02-22T18:00:00Z",
+      "started_at": "2026-02-22T09:00:00Z",
+      "last_activity_at": "2026-02-22T09:00:00Z",
+      "hourly_burn_rate_aud": 12.0
+    }
+  ]
+}
