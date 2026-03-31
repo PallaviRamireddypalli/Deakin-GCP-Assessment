@@ -17,7 +17,7 @@ The design is intentionally built to be:
 - safe by default
 - scalable across many projects
 - adaptable to multiple use cases
-- easy for a reviewer to run locally and validate in GCP
+- easy for to run locally and validate in GCP
 
 ---
 
@@ -42,7 +42,7 @@ It was designed around a university style multi project environment where projec
 - protection against unplanned high cost runtime usage
 - automatic onboarding and offboarding
 - support for 1:1 and 1:many principal models
-- applicability across PhD Research, Teaching and Learning, Research, and Professional Staff
+- applicability across PHD_RESEARCH, TEACHING_AND_LEARNING, GENERAL_RESEARCH, and PROFESSIONAL_STAFF
 - scalability to a large multi project environment
 - upgradeability within a two week maintenance window
 - low annual control plane cost target under A$1000
@@ -261,10 +261,10 @@ The repository is safe to review because:
 │   └── live_*_demo.py
 ├── tests/
 ├── data/
-│   ├── scenario_student_a.json
-│   ├── scenario_edge_cases.json
+│   ├── project_profiles.example.json
 │   ├── runtime_stop_test.json
-│   └── project_profiles.example.json
+│   ├── scenario_student_a.json
+│   └── scenario_edge_cases.json
 ├── docs/
 │   ├── architecture_diagram.png
 │   └── solution_document.pdf
@@ -287,7 +287,7 @@ These files make up the main production implementation:
 - `src/colab_runtime_controller.py`
 
 ### Diagnostic and proof files
-The `live_*_demo.py` files are intentionally kept in `src/` as lightweight verification utilities used during adapter validation. They are not the production deployment entrypoint, but they help you understand how individual adapters and persistence components were tested in isolation.
+The `live_*_demo.py` files are intentionally kept in `src/` as lightweight verification utilities used during adapter validation. They are not the production deployment entrypoint, but they help understand how individual adapters and persistence components were tested in isolation.
 
 ### Test path
 - `tests/*`
@@ -296,9 +296,66 @@ The `live_*_demo.py` files are intentionally kept in `src/` as lightweight verif
 
 ---
 
-## 11. Local setup
+## 11. Configuration files and placeholders
 
-### 11.1 Create environment
+### Committed template file
+This repository commits:
+
+- `data/project_profiles.example.json`
+
+This is a reviewer safe template that demonstrates:
+- multiple supported use cases
+- both principal modes
+- dynamic budget settings
+- the expected governance metadata structure
+
+### Local only runtime file
+For live GCP execution, create a local file named:
+
+- `data/project_profiles.json`
+
+This file is ignored by Git and is not committed.
+
+### Why there are multiple example project IDs
+The example profile file contains multiple placeholder project IDs to demonstrate that the policy model supports:
+- PHD_RESEARCH
+- TEACHING_AND_LEARNING
+- GENERAL_RESEARCH
+- PROFESSIONAL_STAFF
+- both ONE_TO_ONE and ONE_TO_MANY principal models
+
+These are logical examples only.
+
+One does not need to create four real GCP projects to run the code locally.
+
+### Minimum reviewer setup for live GCP demos
+If a reviewer wants to run the live discovery or live orchestrator demos, they can use a single real GCP project.
+
+They should:
+
+1. copy the template file
+2. create `data/project_profiles.json`
+3. replace one placeholder key such as `YOUR_PHD_PROJECT_ID` with their real project ID
+4. replace placeholder principals and values for their environment
+5. leave the other example entries in place or remove them
+
+The live discovery path only governs projects whose IDs match real discovered project IDs.
+
+### Placeholder values in tracked files
+Tracked repo files intentionally use placeholders such as:
+- `YOUR_ORG_ID`
+- `YOUR_PROJECT_ID`
+- `YOUR_REGION`
+
+One should replace those only when they want to run the live GCP demo path.
+
+Local tests do not require real cloud identifiers.
+
+---
+
+## 12. Local setup
+
+### 12.1 Create environment
 
 Use Python 3.11.
 
@@ -308,13 +365,13 @@ source .venv/Scripts/activate
 pip install -r requirements.txt
 ```
 
-### 11.2 Run tests
+### 12.2 Run tests
 
 ```bash
 pytest -q
 ```
 
-### 11.3 Compile deployment entrypoint
+### 12.3 Compile deployment entrypoint
 
 ```bash
 python -m py_compile main.py
@@ -322,9 +379,9 @@ python -m py_compile main.py
 
 ---
 
-## 12. Local validation flow
+## 13. Local validation flow
 
-### 12.1 Core logic tests
+### 13.1 Core logic tests
 The local test suite validates:
 - preventive request checks
 - idle runtime mitigation logic
@@ -336,7 +393,7 @@ The local test suite validates:
 - onboarding and offboarding
 - repeated critical incident escalation
 
-### 12.2 Scenario simulator
+### 13.2 Scenario simulator
 Run the sample scenario:
 
 ```bash
@@ -350,11 +407,19 @@ This produces:
 - action plans
 - dry run execution records
 
+### 13.3 What works without any cloud setup
+A reviewer can run these immediately after cloning:
+- `pytest -q`
+- `python -m py_compile main.py`
+- `python -m src.simulator data/scenario_student_a.json`
+
+These do not require live GCP configuration.
+
 ---
 
-## 13. GCP deployment overview
+## 14. GCP deployment overview
 
-### 13.1 Required services
+### 14.1 Required services
 The deployed MVP uses these native services:
 - Cloud Logging
 - Pub/Sub
@@ -364,7 +429,7 @@ The deployed MVP uses these native services:
 - Cloud Resource Manager
 - Notebook Runtime / Colab Enterprise API
 
-### 13.2 Required service account
+### 14.2 Required service account
 Create a dedicated runtime service account for the function.
 
 Example:
@@ -376,12 +441,12 @@ The runtime service account should have only the roles needed for:
 - notebook runtime stop
 - service invocation where required
 
-### 13.3 Deployment entrypoint
+### 14.3 Deployment entrypoint
 The deployed serverless entrypoint is:
 - `main.py`
 - function target: `guardrail_entrypoint`
 
-### 13.4 Example deploy command
+### 14.4 Example deploy command
 
 ```bash
 gcloud run deploy guardrail-orchestrator   --source .   --function guardrail_entrypoint   --base-image python311   --region <REGION>   --service-account guardrail-fn-sa@<PROJECT_ID>.iam.gserviceaccount.com
@@ -389,7 +454,7 @@ gcloud run deploy guardrail-orchestrator   --source .   --function guardrail_ent
 
 ---
 
-## 14. Configuration
+## 15. Configuration
 
 The repository should be configured with environment specific values during deployment, not hardcoded in public source where possible.
 
@@ -420,7 +485,7 @@ Do not enable this unless:
 
 ---
 
-## 15. Event types handled
+## 16. Event types handled
 
 ### `log_event`
 Used for audit log driven processing.
@@ -441,9 +506,9 @@ Examples:
 
 ---
 
-## 16. Manual live verification steps
+## 17. Manual live verification steps
 
-### 16.1 Manual Pub/Sub path
+### 17.1 Manual Pub/Sub path
 Publish a test sweep message:
 
 ```bash
@@ -461,7 +526,7 @@ Expected:
 - payload parsed
 - orchestrator ran successfully
 
-### 16.2 Audit log path
+### 17.2 Audit log path
 Perform a small admin action such as creating a temporary Pub/Sub topic.
 
 This produces:
@@ -474,7 +539,7 @@ Expected:
 - event classified as `log_event`
 - orchestrator executed successfully
 
-### 16.3 Scheduler path
+### 17.3 Scheduler path
 Create a scheduler job that publishes to the shared topic.
 
 Run it manually:
@@ -487,7 +552,7 @@ Expected:
 - `scheduled_sweep` payload reaches the function
 - orchestrator runs successfully
 
-### 16.4 Runtime stop dry run test
+### 17.4 Runtime stop dry run test
 Publish the supplied runtime test payload:
 
 ```bash
@@ -503,7 +568,7 @@ Expected live result:
 
 ---
 
-## 17. Proven live in GCP
+## 18. Proven live in GCP
 
 The following have been verified in the native GCP environment:
 
@@ -517,11 +582,11 @@ The following have been verified in the native GCP environment:
 - dry run notebook runtime mitigation path
 
 ### Important note
-The repository proves real adapter invocation for runtime mitigation, but defaults to dry run mode. This is intentional so you can test safely without accidentally stopping real runtimes.
+The repository proves real adapter invocation for runtime mitigation, but defaults to dry run mode. This is intentional so reviewers can test safely without accidentally stopping real runtimes.
 
 ---
 
-## 18. Security and safe publishing guidance
+## 19. Security and safe publishing guidance
 
 ### Safe to publish
 - source code
@@ -540,6 +605,7 @@ The repository proves real adapter invocation for runtime mitigation, but defaul
 - personal billing data
 - local cache or virtual environment
 - raw credential JSON files
+- `data/project_profiles.json`
 
 ### Recommended `.gitignore`
 
@@ -552,13 +618,14 @@ env/
 .env
 .gcloud-clean/
 application_default_credentials.json
+data/project_profiles.json
 *.pem
 *.log
 ```
 
 ---
 
-## 19. Requirement coverage summary
+## 20. Requirement coverage summary
 
 This solution addresses the major explicit and implicit requirements:
 
@@ -566,7 +633,7 @@ This solution addresses the major explicit and implicit requirements:
 - protection against unplanned high cost runtime usage
 - automatic onboarding and offboarding
 - support for 1:1 and 1:many principal models
-- applicability across PhD Research, Teaching and Learning, Research, and Professional Staff
+- applicability across PHD_RESEARCH, TEACHING_AND_LEARNING, GENERAL_RESEARCH, and PROFESSIONAL_STAFF
 - scalable shared control plane design
 - low cost operational model
 - upgradeability through modular architecture
@@ -575,7 +642,7 @@ This solution addresses the major explicit and implicit requirements:
 
 ---
 
-## 20. Known assumptions
+## 21. Known assumptions
 
 - governance metadata is currently represented using profile data rather than a full production metadata registry
 - real runtime stop is feature gated for safety
@@ -585,7 +652,7 @@ This solution addresses the major explicit and implicit requirements:
 
 ---
 
-## 21. Recommended reviewer flow
+## 22. Recommended reviewer flow
 
 If you are reviewing this repository, use this order:
 
@@ -597,9 +664,23 @@ pytest -q
 ```
 
 ### Step 2
-Review the architecture diagram and solution document in `docs/`
+Compile the deployment entrypoint:
+
+```bash
+python -m py_compile main.py
+```
 
 ### Step 3
+Run the local simulator:
+
+```bash
+python -m src.simulator data/scenario_student_a.json
+```
+
+### Step 4
+Review the architecture diagram and solution document in `docs/`
+
+### Step 5
 Inspect production path files:
 - `main.py`
 - `src/orchestrator.py`
@@ -609,22 +690,16 @@ Inspect production path files:
 - `src/firestore_state_store.py`
 - `src/colab_runtime_controller.py`
 
-### Step 4
-Run the local scenario simulator
-
-### Step 5
-Deploy the serverless entrypoint to GCP
-
 ### Step 6
-Verify:
-- manual Pub/Sub event
-- scheduler event
-- audit log event
-- dry run runtime stop test
+Only if live GCP validation is desired:
+- create `data/project_profiles.json` from the example file
+- replace placeholders with real values
+- enable required APIs
+- run the live GCP demo path
 
 ---
 
-## 22. Future enhancements
+## 23. Future enhancements
 
 Possible next enhancements include:
 - real notification adapter
@@ -636,7 +711,7 @@ Possible next enhancements include:
 
 ---
 
-## 23. Final note
+## 24. Final note
 
 This repository intentionally prioritizes:
 
